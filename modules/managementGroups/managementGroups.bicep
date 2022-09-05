@@ -71,7 +71,6 @@ var varLandingZoneMgChildrenConfidential = {
 // Build final object based on input parameters for child MGs of LZs
 var varLandingZoneMgChildrenUnioned = (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, varLandingZoneMgChildrenConfidential) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenAlzDefault, parLandingZoneMgChildren) : (parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenAlzDefault : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? union(varLandingZoneMgChildrenConfidential, parLandingZoneMgChildren) : (!parLandingZoneMgAlzDefaultsEnable && parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? varLandingZoneMgChildrenConfidential : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (!empty(parLandingZoneMgChildren))) ? parLandingZoneMgChildren : (!parLandingZoneMgAlzDefaultsEnable && !parLandingZoneMgConfidentialEnable && (empty(parLandingZoneMgChildren))) ? {} : {}
 
-
 // Sandbox Management Group
 var varSandboxMg = {
   name: '${parTopLevelManagementGroupPrefix}-sandbox'
@@ -199,13 +198,12 @@ resource resLandingZonesChildMgs 'Microsoft.Management/managementGroups@2021-04-
 
 // Output Management Group IDs
 output outTopLevelManagementGroupId string = resTopLevelMg.id
-
 output outPlatformManagementGroupId string = resPlatformMg.id
 output outPlatformManagementManagementGroupId string = resPlatformManagementMg.id
 output outPlatformConnectivityManagementGroupId string = resPlatformConnectivityMg.id
 output outPlatformIdentityManagementGroupId string = resPlatformIdentityMg.id
 output outLandingZonesManagementGroupId string = resLandingZonesMg.id
-output outLandingZoneChildrenMangementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}' ]
+output outLandingZoneChildrenMangementGroupIds array = [for mg in items(varLandingZoneMgChildrenUnioned): '/providers/Microsoft.Management/managementGroups/${parTopLevelManagementGroupPrefix}-landingzones-${mg.key}']
 output outSandboxManagementGroupId string = resSandboxMg.id
 output outDecommissionedManagementGroupId string = resDecommissionedMg.id
 
@@ -216,6 +214,6 @@ output outPlatformManagementManagementGroupName string = resPlatformManagementMg
 output outPlatformConnectivityManagementGroupName string = resPlatformConnectivityMg.name
 output outPlatformIdentityManagementGroupName string = resPlatformIdentityMg.name
 output outLandingZonesManagementGroupName string = resLandingZonesMg.name
-output outLandingZoneChildrenMangementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName ]
+output outLandingZoneChildrenMangementGroupNames array = [for mg in items(varLandingZoneMgChildrenUnioned): mg.value.displayName]
 output outSandboxManagementGroupName string = resSandboxMg.name
 output outDecommissionedManagementGroupName string = resDecommissionedMg.name
